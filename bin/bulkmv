@@ -1,0 +1,52 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Getopt::Long;
+use File::Copy;
+
+#
+# bulkmv - bulk file mv
+# makes mv commands to all input files based on a perlexpr
+#
+
+my $exec = 0;
+my $help = 0;
+my $result = GetOptions(
+	'exec' => \$exec,
+	'help' => \$help,
+);
+help() if(!$result or $help);
+
+warn "executing commands\n" if $exec;
+
+my $expr = shift @ARGV or help();
+
+unless(@ARGV)
+{
+	warn "reading filenames from STDIN\n";
+	@ARGV = <STDIN>;
+	chomp(@ARGV);
+}
+
+for(@ARGV)
+{
+	my $was = $_;
+	eval $expr;
+	die $@ if $@;
+	next if $was eq $_; # name didn't changed, ignore
+	my @cmd = ("mv",$was,$_);
+	print "@cmd\n";
+
+	if($exec) {
+		move($was, $_) or
+		die "Move error: $! [$was] [$_]";
+	}
+}
+
+sub help
+{
+	warn "bulkmv - bulk file mv\n";
+	warn "makes mv commands to all input files based on a perlexpr\n";
+	warn "Usage: makemv [--exec] perlexpr [filenames..]\n";
+	exit(1);
+}

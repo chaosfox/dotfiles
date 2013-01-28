@@ -1,0 +1,31 @@
+
+set nocompatible
+
+syntax on
+
+set title
+set ruler
+set number
+set ttyfast
+set wildmenu
+
+set hlsearch
+set incsearch
+set smartcase
+
+set ignorecase
+set scrolloff=2
+set showtabline=2
+set wildmode=longest:full
+set backspace=indent,eol,start
+
+" make tabs visible
+set list
+set listchars=tab:»\  
+
+
+map <Space> :noh<CR>
+map . :tabnext<CR>
+map , :tabprevious<CR>
+
+colorscheme xoria256

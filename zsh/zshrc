@@ -1,0 +1,84 @@
+
+
+source ~/dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+# set prompt
+autoload colors && colors
+setopt prompt_subst
+export PROMPT='%{$fg_bold[red]%}❯ %{$fg_bold[black]%}%* %{$fg_bold[cyan]%}%c %{$reset_color%}'
+
+# ls colors variable
+[ -x "$(which dircolors)" ] && eval "`dircolors -b`"
+
+# disable auto-correct
+unsetopt correct_all
+
+## Command history configuration
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups # ignore duplication command history list
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+unsetopt share_history
+
+# advanced tab completion
+autoload -U compinit && compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# zsh time format
+TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
+
+# no beeps please
+setterm -blength 0
+
+# set cd to use pushd/popd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushd_minus
+alias pd="popd"
+
+# aliases
+alias l=vimless
+alias ls='ls --color=auto'
+alias ll='ls -lh'
+alias ld='ll -d */'
+alias la='ll -A'
+alias df='df -hTP | column -t'
+alias grep='grep --color=auto'
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+
+export EDITOR='vim'
+
+# local scripts and binaries
+PATH+=:~/bin
+
+# prevent exiting the shell with ^D
+setopt ignoreeof
+
+# key bindings
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
+bindkey "^[[H" beginning-of-line
+bindkey "^[[1~" beginning-of-line
+bindkey "^[OH" beginning-of-line
+bindkey "^[[F"  end-of-line
+bindkey "^[[4~" end-of-line
+bindkey "^[OF" end-of-line
+bindkey '^?' backward-delete-char
+bindkey "^[[3~" delete-char
+bindkey "^[3;5~" delete-char
+bindkey "\e[3~" delete-char
+
+

@@ -1,0 +1,25 @@
+[ -z "$PS1" ] && return
+
+setterm -blength 0
+
+alias ls='ls --color=auto'
+alias l='less -S'
+alias ll='ls -lh'
+alias ld='ll -d */'
+alias la='ll -A'
+alias df='df -hT'
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+[ -x /usr/bin/lesspipe.sh ] && eval "$(lesspipe.sh)"
+[ -x "$(which dircolors)" ] && eval "`dircolors -b`"
+
+export EDITOR='vim'
+
+# prevent shell from exiting with Ctrl-d
+IGNOREEOF=10
+
+
+export HISTCONTROL=ignoredups
+

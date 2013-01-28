@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+#
+# vimless - pager with vim
+# derived from vim's macros/less.sh
+#
+
+my @vim = ('vim', '--cmd', 'let no_plugin_maps = 1', '-c', 'runtime! macros/vimless.vim');
+
+if(-t STDOUT) {
+	if(@ARGV == 0) {
+		if(-t STDIN) {
+			die "Missing filename\n";
+		}
+		exec @vim, '-';
+	}
+	else {
+		exec @vim, '-R', grep {
+			warn "$_: No such file or directory\n" if ! -e;
+			warn "$_: Permission denied\n" if -e && ! -r;
+			-e && -r;
+		}@ARGV;
+	}
+}
+else {
+	if(@ARGV == 0 && -t STDIN ) {
+		die "Missing filename\n";
+	}
+	print while <>;
+}
+

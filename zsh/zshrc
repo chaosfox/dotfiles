@@ -1,5 +1,4 @@
 
-
 source ~/dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
@@ -39,6 +38,9 @@ TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
 # no beeps please
 setterm -blength 0
+
+# allow continue suspended output with any key
+stty ixany
 
 # set cd to use pushd/popd
 setopt auto_pushd

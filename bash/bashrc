@@ -2,6 +2,9 @@
 
 setterm -blength 0
 
+# allow continue suspended output with any key
+stty ixany
+
 alias ls='ls --color=auto'
 alias l='less -S'
 alias ll='ls -lh'
@@ -11,6 +14,7 @@ alias df='df -hT'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+alias grep='grep --color=auto'
 
 [ -x /usr/bin/lesspipe.sh ] && eval "$(lesspipe.sh)"
 [ -x "$(which dircolors)" ] && eval "`dircolors -b`"

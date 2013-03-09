@@ -1,5 +1,7 @@
 [ -z "$PS1" ] && return
 
+export PS1="\u@\h \w> "
+
 setterm -blength 0
 
 # allow continue suspended output with any key

@@ -41,7 +41,7 @@ while(my ($s, $d) = each %$index) {
 	# destination file exists
 	if(-e $d) {
 		if(abs_path($d) eq abs_path($s)) { # its already linked or its the same file
-			print BOLD sprintf("%22s","Link already exists. "), $txt, "\n";
+			print CYAN sprintf("%22s","Link already exists. "), $txt, "\n";
 			next;
 		}
 		else {

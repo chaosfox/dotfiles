@@ -31,7 +31,7 @@ while(my ($s, $d) = each %$index) {
 	($s) = glob($src_dir.$s); 
 	($d) = glob($dst_dir.$d);
 
-	my $txt = (CYAN "[$s]")." to ".CYAN "[$d]";
+	my $txt = RESET. (BOLD "[$s]")." to ".BOLD "[$d]";
 
 	# source file not found
 	unless(-e $s) {
@@ -41,7 +41,7 @@ while(my ($s, $d) = each %$index) {
 	# destination file exists
 	if(-e $d) {
 		if(abs_path($d) eq abs_path($s)) { # its already linked or its the same file
-			print BRIGHT_BLUE sprintf("%22s","Link already exists. "), $txt, "\n";
+			print BOLD sprintf("%22s","Link already exists. "), $txt, "\n";
 			next;
 		}
 		else {

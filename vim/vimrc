@@ -1,33 +1,54 @@
 
 set nocompatible
 
-syntax on
+" vimwiki settings
+let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
 
-set title
-set ruler
-set number
-set ttyfast
-set wildmenu
-set cursorline
+" bootstrap pathogen & submodules
+runtime bundle/pathogen/autoload/pathogen.vim
+execute pathogen#infect()
+filetype plugin indent on
 
-set hlsearch
+" moving around, searching and patterns
 set incsearch
-set smartcase
-set showmatch
 set ignorecase
+set smartcase
 
+" displaying text
 set scrolloff=2
-set showtabline=2
-set wildmode=longest:full
-set backspace=indent,eol,start
+set number
 
 " make tabs visible
 set list
 set listchars=tab:»\  
 
+" syntax, highlighting and spelling
+syntax on
+colorscheme molokai
+set hlsearch
+set cursorline
 
+" multiple tab pages
+set showtabline=2
+
+" terminal
+set title
+set ttyfast
+
+" messages and info
+set ruler
+set showcmd
+
+" editing text
+set showmatch
+set backspace=indent,eol,start
+
+" mapping
 map <Space> :noh<CR>
-map . :tabnext<CR>
-map , :tabprevious<CR>
+map <Leader>a :tabnext<CR>
+map <Leader>z :tabprevious<CR>
 
-colorscheme xoria256
+" command line editing
+set wildmenu
+set wildmode=longest:full
+

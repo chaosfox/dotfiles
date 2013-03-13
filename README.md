@@ -9,6 +9,7 @@ to modify & distribute across multiple computers.
 ```terminal
 git clone this.repo ~/dotfiles
 cd dotfiles
+git submodule update --init
 perl bootstrap.pl [--exec]
 ```
 

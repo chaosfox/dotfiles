@@ -1,25 +1,24 @@
 [ -z "$PS1" ] && return
 
-export PS1="\u@\h \w> "
+export PS1='\u@\h \W\$ '
 
 if [ -d "$HOME/local/bin" ]; then
-       export PATH=$PATH:$HOME/local/bin
-fi
-if [ -d "$HOME/local/lib" ]; then
-       export LD_LIBRARY_PATH=$HOME/local/lib
+       export PATH=$HOME/local/bin:$PATH
 fi
 
 setterm -blength 0
 
-# allow continue suspended output with any key
-stty ixany
+# disable flow control
+stty ixoff -ixon
+stty stop undef
+stty start undef
 
 alias ls='ls --color=auto'
 alias l='less -S'
 alias ll='ls -lh'
 alias ld='ll -d */'
 alias la='ll -A'
-alias df='df -hTP'
+alias df='df -hTP | column -t'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'

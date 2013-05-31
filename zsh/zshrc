@@ -5,10 +5,12 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 # set prompt
 autoload colors && colors
 setopt prompt_subst
-export PROMPT='%{$fg_bold[red]%}❯ %{$fg_bold[black]%}%* %{$fg_bold[cyan]%}%c %{$reset_color%}'
+export PROMPT='%(?..%{$fg_no_bold[red]%}%? )%{$fg_bold[red]%}❯ %{$fg_bold[black]%}%* %{$fg_bold[blue]%}%c%{$fg_bold[green]%}%#%{$reset_color%} '
 
 # ls colors variable
+[ -x /usr/bin/lesspipe.sh ] && eval "$(lesspipe.sh)"
 [ -x "$(which dircolors)" ] && eval "`dircolors -b`"
+export EDITOR='vim'
 
 # disable auto-correct
 unsetopt correct_all
@@ -20,8 +22,11 @@ SAVEHIST=10000
 setopt append_history
 setopt extended_history
 setopt hist_expire_dups_first
-setopt hist_ignore_dups # ignore duplication command history list
+setopt hist_ignore_dups # ignore dups in command history list
+setopt hist_ignore_all_dups # no seriously, ignore dups
+setopt hist_reduce_blanks
 setopt hist_ignore_space
+setopt hist_no_store
 setopt hist_verify
 setopt inc_append_history
 unsetopt share_history
@@ -38,9 +43,13 @@ TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
 # no beeps please
 setterm -blength 0
+setopt no_beep
 
-# allow continue suspended output with any key
-stty ixany
+# disable control flow
+stty ixoff -ixon 
+stty stop undef
+stty start undef
+setopt no_flow_control
 
 # set cd to use pushd/popd
 setopt auto_pushd
@@ -49,38 +58,39 @@ setopt pushd_minus
 alias pd="popd"
 
 # aliases
-alias l=vimless
 alias ls='ls --color=auto'
+alias l='less -S'
 alias ll='ls -lh'
 alias ld='ll -d */'
 alias la='ll -A'
 alias df='df -hTP | column -t'
-alias grep='grep --color=auto'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-
-
-export EDITOR='vim'
+alias grep='grep --color=auto'
 
 # local scripts and binaries
-PATH+=:~/bin
+PATH+=:~/local/bin
 
 # prevent exiting the shell with ^D
 setopt ignoreeof
 
 # key bindings
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
-bindkey "^[[H" beginning-of-line
-bindkey "^[[1~" beginning-of-line
-bindkey "^[OH" beginning-of-line
-bindkey "^[[F"  end-of-line
-bindkey "^[[4~" end-of-line
-bindkey "^[OF" end-of-line
+
+bindkey -e
+bindkey '\e[A' up-line-or-history
+bindkey '\e[B' down-line-or-history
+bindkey '\eOA' up-line-or-history
+bindkey '\eOB' down-line-or-history
+bindkey '\e[H' beginning-of-line
+bindkey '\e[1~' beginning-of-line
+bindkey '\eOH' beginning-of-line
+bindkey '\e[F'  end-of-line
+bindkey '\e[4~' end-of-line
+bindkey '\eOF' end-of-line
 bindkey '^?' backward-delete-char
-bindkey "^[[3~" delete-char
-bindkey "^[3;5~" delete-char
-bindkey "\e[3~" delete-char
+bindkey '\e[3~' delete-char
+bindkey '\e3;5~' delete-char
+bindkey ' ' magic-space
 
 
